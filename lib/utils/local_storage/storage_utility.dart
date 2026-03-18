@@ -1,4 +1,4 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TLocalStorage {
 
@@ -14,25 +14,47 @@ class TLocalStorage {
 
   TLocalStorage._internal();
 
-  final GetStorage _storage = GetStorage();
+  SharedPreferences? _prefs;
+
+  Future<SharedPreferences> _prefsInstance() async {
+    return _prefs ??= await SharedPreferences.getInstance();
+  }
 
   /// Save Data
   Future<void> saveData<T>(String key, T value) async {
-    await _storage.write(key, value);
+    final prefs = await _prefsInstance();
+    switch (value) {
+      case final String v:
+        await prefs.setString(key, v);
+      case final int v:
+        await prefs.setInt(key, v);
+      case final double v:
+        await prefs.setDouble(key, v);
+      case final bool v:
+        await prefs.setBool(key, v);
+      case final List<String> v:
+        await prefs.setStringList(key, v);
+      default:
+        await prefs.setString(key, value.toString());
+    }
   }
 
   /// Read Data
   T? readData<T>(String key) {
-    return _storage.read<T>(key);
+    final prefs = _prefs;
+    if (prefs == null) return null;
+    return prefs.get(key) as T?;
   }
 
   /// Remove Data
   Future<void> removeData(String key) async {
-    await _storage.remove(key);
+    final prefs = await _prefsInstance();
+    await prefs.remove(key);
   }
 
   /// Clear All Storage
   Future<void> clearAll() async {
-    await _storage.erase();
+    final prefs = await _prefsInstance();
+    await prefs.clear();
   }
 }

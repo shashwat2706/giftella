@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:giftella/features/authentication/controllers/onboarding/onboarding_controller.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/device/device_utility.dart';
@@ -7,7 +6,10 @@ import '../../../../../utils/device/device_utility.dart';
 class OnBoardingSkip extends StatelessWidget {
   const OnBoardingSkip({
     super.key,
+    required this.onSkip,
   });
+
+  final VoidCallback onSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class OnBoardingSkip extends StatelessWidget {
         top: TDeviceUtils.getAppBarHeight(),
         right: TSizes.defaultSpace,
         child: TextButton(
-            onPressed: () => OnBoardingController.instance.skipPage(),
+            onPressed: onSkip,
             child: const Text("Skip")
         )
     );

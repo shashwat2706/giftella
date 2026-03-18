@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class THelperFunctions {
@@ -40,8 +39,8 @@ class THelperFunctions {
   }
 
   // Show Snackbar
-  static void showSnackBar(String message) {
-    ScaffoldMessenger.of(Get.context!).showSnackBar(
+  static void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
       ),
@@ -49,9 +48,9 @@ class THelperFunctions {
   }
 
   // Show Alert Dialog
-  static void showAlert(String title, String message) {
+  static void showAlert(BuildContext context, String title, String message) {
     showDialog(
-      context: Get.context!,
+      context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),
@@ -90,16 +89,16 @@ class THelperFunctions {
   }
 
   // Screen Size
-  static Size screenSize() {
-    return MediaQuery.of(Get.context!).size;
+  static Size screenSizeFrom(BuildContext context) {
+    return MediaQuery.of(context).size;
   }
 
-  static double screenHeight() {
-    return MediaQuery.of(Get.context!).size.height;
+  static double screenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
   }
 
-  static double screenWidth() {
-    return MediaQuery.of(Get.context!).size.width;
+  static double screenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
   }
 
   // Get Formatted Date

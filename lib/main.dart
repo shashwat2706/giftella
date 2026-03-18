@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:giftella/utils/theme/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app.dart';
+import 'firebase_options.dart';
 
 //------- ENTRY POINT OF FLUTTER APP --------//
-void main() {
-
-  // Todo : Add widgets binding
-  // Todo : Init Local Storage
-  // Todo : Await Native Splash
-  // Todo : Initialize Firebase
-  // Todo : Initialize Authentication
-
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 
